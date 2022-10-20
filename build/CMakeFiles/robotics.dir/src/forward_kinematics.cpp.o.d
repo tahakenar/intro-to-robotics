@@ -1,5 +1,6 @@
-CMakeFiles/robotics.dir/src/main.cpp.o: \
-  /Users/emirkenar/Desktop/Robotics\ Playground/intro-to-robotics/src/main.cpp \
+CMakeFiles/robotics.dir/src/forward_kinematics.cpp.o: \
+  /Users/emirkenar/Desktop/Robotics\ Playground/intro-to-robotics/src/forward_kinematics.cpp \
+  /Users/emirkenar/Desktop/Robotics\ Playground/intro-to-robotics/include/forward_kinematics.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/iostream \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__config_site \
@@ -414,11 +415,11 @@ CMakeFiles/robotics.dir/src/main.cpp.o: \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/sys/_types/_fsfilcnt_t.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/_types/_nl_item.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__bsd_locale_defaults.h \
-  /Users/emirkenar/Desktop/Robotics\ Playground/intro-to-robotics/include/transforms.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/cmath \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/math.h \
   /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/math.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/list \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/vector \
+  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__split_buffer \
   /usr/local/include/eigen3/Eigen/Core \
   /usr/local/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
   /usr/local/include/eigen3/Eigen/src/Core/util/Macros.h \
@@ -556,7 +557,4 @@ CMakeFiles/robotics.dir/src/main.cpp.o: \
   /usr/local/include/eigen3/Eigen/src/Core/ArrayWrapper.h \
   /usr/local/include/eigen3/Eigen/src/Core/StlIterators.h \
   /usr/local/include/eigen3/Eigen/src/Core/GlobalFunctions.h \
-  /usr/local/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h \
-  /Users/emirkenar/Desktop/Robotics\ Playground/intro-to-robotics/include/forward_kinematics.h \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/vector \
-  /Library/Developer/CommandLineTools/SDKs/MacOSX12.3.sdk/usr/include/c++/v1/__split_buffer
+  /usr/local/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h

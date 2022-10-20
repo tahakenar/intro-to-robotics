@@ -129,6 +129,30 @@ robotics/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/robotics.dir/build.make CMakeFiles/robotics.dir/build
 .PHONY : robotics/fast
 
+src/forward_kinematics.o: src/forward_kinematics.cpp.o
+.PHONY : src/forward_kinematics.o
+
+# target to build an object file
+src/forward_kinematics.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robotics.dir/build.make CMakeFiles/robotics.dir/src/forward_kinematics.cpp.o
+.PHONY : src/forward_kinematics.cpp.o
+
+src/forward_kinematics.i: src/forward_kinematics.cpp.i
+.PHONY : src/forward_kinematics.i
+
+# target to preprocess a source file
+src/forward_kinematics.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robotics.dir/build.make CMakeFiles/robotics.dir/src/forward_kinematics.cpp.i
+.PHONY : src/forward_kinematics.cpp.i
+
+src/forward_kinematics.s: src/forward_kinematics.cpp.s
+.PHONY : src/forward_kinematics.s
+
+# target to generate assembly for a file
+src/forward_kinematics.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/robotics.dir/build.make CMakeFiles/robotics.dir/src/forward_kinematics.cpp.s
+.PHONY : src/forward_kinematics.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -186,6 +210,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... robotics"
+	@echo "... src/forward_kinematics.o"
+	@echo "... src/forward_kinematics.i"
+	@echo "... src/forward_kinematics.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
