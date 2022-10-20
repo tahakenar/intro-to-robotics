@@ -24,18 +24,18 @@ void FKModel::calculateFKModel()
 Eigen::Matrix4d FKModel::getHomogeneousTransMatrix(const AxisDHParam& dh_param)
 {
     Eigen::Matrix4d A = Eigen::Matrix4d::Identity(4,4);
-    A(0,0) = cos(dh_param.theta);
-    A(0,1) = -sin(dh_param.theta)*cos(dh_param.alpha);
-    A(0,2) = sin(dh_param.theta)*sin(dh_param.alpha);
-    A(0,3) = dh_param.a * cos(dh_param.theta);
+    A(0,0) = std::cos(dh_param.theta);
+    A(0,1) = -std::sin(dh_param.theta)*std::cos(dh_param.alpha);
+    A(0,2) = std::sin(dh_param.theta)*std::sin(dh_param.alpha);
+    A(0,3) = dh_param.a * std::cos(dh_param.theta);
 
-    A(1,0) = sin(dh_param.theta);
-    A(1,1) = cos(dh_param.theta)*cos(dh_param.alpha);
-    A(1,2) = -cos(dh_param.theta)*sin(dh_param.alpha);
-    A(1,3) = dh_param.a * sin(dh_param.theta);
+    A(1,0) = std::sin(dh_param.theta);
+    A(1,1) = std::cos(dh_param.theta)*std::cos(dh_param.alpha);
+    A(1,2) = -std::cos(dh_param.theta)*std::sin(dh_param.alpha);
+    A(1,3) = dh_param.a * std::sin(dh_param.theta);
 
-    A(2,1) = sin(dh_param.alpha);
-    A(2,2) = cos(dh_param.alpha);
+    A(2,1) = std::sin(dh_param.alpha);
+    A(2,2) = std::cos(dh_param.alpha);
     A(2,3) = dh_param.d;
 
     return A;
