@@ -8,5 +8,5 @@ include_directories(include)
 find_package(Eigen3 REQUIRED NO_MODULE)
 link_directories(${Eigen_INCLUDE_DIRS})
 
-add_executable(${PROJECT_NAME} src/main.cpp src/transforms.cpp src/forward_kinematics.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp src/transforms.cpp src/forward_kinematics.cpp src/inverse_kinematics.cpp)
 target_link_libraries(${PROJECT_NAME} Eigen3::Eigen)
