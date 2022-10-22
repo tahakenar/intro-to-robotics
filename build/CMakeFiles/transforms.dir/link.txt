@@ -1,2 +1,0 @@
-/Library/Developer/CommandLineTools/usr/bin/ar qc libtransforms.a CMakeFiles/transforms.dir/src/homogeneous_transforms.cpp.o
-/Library/Developer/CommandLineTools/usr/bin/ranlib libtransforms.a

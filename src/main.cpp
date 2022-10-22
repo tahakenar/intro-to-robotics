@@ -1,5 +1,6 @@
 #include <iostream>
 #include "transforms.h"
+#include "forward_kinematics.h"
 
 int main(){
 
