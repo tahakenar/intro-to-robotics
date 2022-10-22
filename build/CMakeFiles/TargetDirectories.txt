@@ -1,3 +1,0 @@
-/Users/emirkenar/Desktop/Robotics Playground/intro-to-robotics/build/CMakeFiles/robotics.dir
-/Users/emirkenar/Desktop/Robotics Playground/intro-to-robotics/build/CMakeFiles/edit_cache.dir
-/Users/emirkenar/Desktop/Robotics Playground/intro-to-robotics/build/CMakeFiles/rebuild_cache.dir
