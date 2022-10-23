@@ -73,3 +73,54 @@ TEST(robotics_tests, RotationTests) {
 
   testRotations(tf, rotation);
 }
+
+void testCompareMatrices(Eigen::MatrixXd m1, Eigen::MatrixXd m2,
+                         double abs_err) {
+  Eigen::MatrixXd m1_reshaped = m1.reshaped();
+  Eigen::MatrixXd m2_reshaped = m2.reshaped();
+
+  for (int i = 0; i < m1.size(); i++) {
+    EXPECT_NEAR(m1(i), m2(i), abs_err);
+  }
+}
+
+TEST(robotics_tests, HomogeneousTransformationTest) {
+  //    The Homogeneous Transformation H represents a rotation by angle 'alpha'
+  //    about the current x-axis. Then :
+  // 1. Followed by a translation of 'a' along the current x-axis
+  // 2. Followed by a translation of 'd' along the current z-axis
+  // 3. Followed by a rotation of 'theta' along the current z-axis
+
+  Transform tf = Transform();
+
+  Eigen::MatrixXd m = Eigen::Matrix4d::Identity(4, 4);
+  Eigen::MatrixXd expected_m(4, 4);
+
+  double alpha = M_PI / 2;
+  double b = 5.0;
+  double d = 1.0;
+  double theta = M_PI / 2;
+
+  tf.addTransform(transform_enums::INITIAL,
+                  tf.getRotation(transform_enums::X, alpha));
+  tf.addTransform(transform_enums::CURRENT_FRAME,
+                  tf.getTranslation(transform_enums::X, b));
+  tf.addTransform(transform_enums::CURRENT_FRAME,
+                  tf.getTranslation(transform_enums::Z, d));
+  tf.addTransform(transform_enums::CURRENT_FRAME,
+                  tf.getRotation(transform_enums::Z, theta));
+  m = tf.getHomogeneousTransform();
+
+  expected_m << std::cos(theta), -std::sin(theta), 0, b,
+      std::cos(alpha) * std::sin(theta), std::cos(alpha) * std::cos(theta),
+      -std::sin(alpha), -d * std::sin(alpha), std::sin(alpha) * std::sin(theta),
+      std::sin(alpha) * std::cos(theta), std::cos(alpha), -d * std::cos(alpha),
+      0, 0, 0, 1;
+
+  testCompareMatrices(expected_m, m, 0.0002);
+
+  // Clear
+  tf.clearTransformQuery();
+  expected_m = Eigen::Matrix4d::Identity(4, 4);
+  m = Eigen::Matrix4d::Identity(4, 4);
+}

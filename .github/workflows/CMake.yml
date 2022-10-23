@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [master, transformations-unit-test]
+    branches: "**"
   pull_request:
     branches: [master]
     types: [closed]
