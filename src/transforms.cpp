@@ -65,7 +65,7 @@ void Transform::getZRotation(Eigen::Matrix4d& m,
   // first: cosine, second: sine
   m(0, 0) = trig_results.first;
   m(0, 1) = -trig_results.second;
-  m(0, 1) = trig_results.second;
+  m(1, 0) = trig_results.second;
   m(1, 1) = trig_results.first;
 }
 

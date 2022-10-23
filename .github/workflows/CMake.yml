@@ -9,7 +9,7 @@ on:
 
 jobs:
   release:
-    name: CI Test
+    name: intro-to-robotics pipeline
     runs-on: ubuntu-latest
 
     steps:
