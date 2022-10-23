@@ -1,5 +1,9 @@
 build/**
 
+googletest/
+
+eigen/
+
 .vscode
 
 *.cfg

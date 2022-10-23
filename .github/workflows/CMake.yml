@@ -2,31 +2,38 @@ name: Build
 
 on:
   push:
-    branches: [master, ci-test]
+    branches: "**"
   pull_request:
     branches: [master]
     types: [closed]
 
 jobs:
   release:
-    name: CI Test
+    name: intro-to-robotics pipeline
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v2
       - name: Create Build Directory
         run: cmake -E make_directory ${{github.workspace}}/build
-        
+
       - name: Install Eigen
-        run: |
-            sudo apt-get update
-            sudo apt-get install libeigen3-dev
-            
-      - name: Configure Cmake
+        run: git clone https://gitlab.com/libeigen/eigen.git
+
+      - name: Install Googletest
+        run: git clone https://github.com/google/googletest.git
+
+      - name: Configure CMake
         run: |
             cd ${{github.workspace}}/build
             cmake ..
+
       - name: Build
         run: |
             cd ${{github.workspace}}/build
             make
+
+      - name: Test
+        run: |
+            cd ${{github.workspace}}/build
+            ./test/robotics_tests

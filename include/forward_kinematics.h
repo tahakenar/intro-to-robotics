@@ -5,7 +5,6 @@
 #include <cmath>
 #include <iostream>
 #include <vector>
-// #include <eigen3/Eigen/Core>
 
 struct AxisDHParam {
   double a;      // link length
