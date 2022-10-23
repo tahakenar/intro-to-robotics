@@ -2,7 +2,7 @@ name: Build
 
 on:
   push:
-    branches: [master, ci-setup]
+    branches: [master, ci-test]
   pull_request:
     branches: [master]
     types: [closed]
