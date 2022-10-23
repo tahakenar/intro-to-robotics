@@ -29,5 +29,9 @@ int main() {
   tf.printQuery();
   m = tf.getHomogeneousTransform();
 
+  std::cout << EIGEN_WORLD_VERSION << std::endl;
+  std::cout << EIGEN_MAJOR_VERSION << std::endl;
+  std::cout << EIGEN_MINOR_VERSION << std::endl;
+
   return 0;
 }

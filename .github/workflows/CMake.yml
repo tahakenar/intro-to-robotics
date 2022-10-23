@@ -18,9 +18,7 @@ jobs:
         run: cmake -E make_directory ${{github.workspace}}/build
 
       - name: Install Eigen
-        run: |
-            sudo apt-get update
-            sudo apt-get install libeigen3-dev
+        run: git clone https://gitlab.com/libeigen/eigen.git
 
       - name: Install Googletest
         run: git clone https://github.com/google/googletest.git
