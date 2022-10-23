@@ -74,7 +74,7 @@ TEST(robotics_tests, RotationTests) {
   testRotations(tf, rotation);
 }
 
-void testCompareMatrices(Eigen::MatrixXd m1, Eigen::MatrixXd m2,
+void testCompareMatrices(Eigen::Matrix4d m1, Eigen::Matrix4d m2,
                          double abs_err) {
   Eigen::MatrixXd m1_reshaped = m1.reshaped();
   Eigen::MatrixXd m2_reshaped = m2.reshaped();
@@ -93,8 +93,8 @@ TEST(robotics_tests, HomogeneousTransformationTest) {
 
   Transform tf = Transform();
 
-  Eigen::MatrixXd m = Eigen::Matrix4d::Identity(4, 4);
-  Eigen::MatrixXd expected_m(4, 4);
+  Eigen::Matrix4d m = Eigen::Matrix4d::Identity(4, 4);
+  Eigen::Matrix4d expected_m(4, 4);
 
   double alpha = M_PI / 2;
   double b = 5.0;
