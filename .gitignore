@@ -7,3 +7,5 @@ eigen/
 .vscode
 
 *.cfg
+
+.DS_Store
