@@ -26,12 +26,16 @@ void testTranslations(Transform tf_object, const double& displacement) {
   }
 }
 
-TEST(robotics_tests, TranslationTests) {
-  Transform tf = Transform();
-  double displacement = 2.0;
+struct TranslationFixture : public testing::TestWithParam<double> {};
 
+TEST_P(TranslationFixture, TranslationTest) {
+  Transform tf = Transform();
+  double displacement = GetParam();
   testTranslations(tf, displacement);
 }
+
+INSTANTIATE_TEST_SUITE_P(TranslationTests, TranslationFixture,
+                         testing::Values(1.9923, 2.13, -5.21, 3.235));
 
 void testRotations(Transform tf_object, const double& rotation) {
   std::vector<Eigen::MatrixXd> rotation_matrices;
@@ -67,12 +71,16 @@ void testRotations(Transform tf_object, const double& rotation) {
   }
 }
 
-TEST(robotics_tests, RotationTests) {
-  Transform tf = Transform();
-  double rotation = M_PI / 2;
+struct RotationFixture : public testing::TestWithParam<double> {};
 
+TEST_P(RotationFixture, RotationTest) {
+  Transform tf = Transform();
+  double rotation = GetParam();
   testRotations(tf, rotation);
 }
+
+INSTANTIATE_TEST_SUITE_P(RotationTests, RotationFixture,
+                         testing::Values(M_PI, M_PI / 2, -M_PI / 3, -M_PI / 7));
 
 void testCompareMatrices(Eigen::Matrix4d m1, Eigen::Matrix4d m2,
                          double abs_err) {
