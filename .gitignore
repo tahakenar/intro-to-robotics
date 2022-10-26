@@ -1,3 +1,11 @@
-build/
+build/**
+
+googletest/
+
+eigen/
 
 .vscode
+
+*.cfg
+
+.DS_Store
