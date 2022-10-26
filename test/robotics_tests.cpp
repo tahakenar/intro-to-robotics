@@ -86,13 +86,15 @@ void testCompareMatrices(Eigen::Matrix4d m1, Eigen::Matrix4d m2,
                          double abs_err) {
   Eigen::MatrixXd m1_reshaped = m1.reshaped();
   Eigen::MatrixXd m2_reshaped = m2.reshaped();
-
   for (int i = 0; i < m1.size(); i++) {
-    EXPECT_NEAR(m1(i), m2(i), abs_err);
+    ASSERT_NEAR(m1(i), m2(i), abs_err);
   }
 }
 
-TEST(robotics_tests, HomogeneousTransformationTest) {
+struct HomogeneousTransFixture
+    : public testing::TestWithParam<std::array<double, 4>> {};
+
+TEST_P(HomogeneousTransFixture, HomogeneousTransformationTest) {
   //    The Homogeneous Transformation H represents a rotation by angle 'alpha'
   //    about the current x-axis. Then :
   // 1. Followed by a translation of 'a' along the current x-axis
@@ -104,10 +106,14 @@ TEST(robotics_tests, HomogeneousTransformationTest) {
   Eigen::Matrix4d m = Eigen::Matrix4d::Identity(4, 4);
   Eigen::Matrix4d expected_m(4, 4);
 
-  double alpha = M_PI / 2;
-  double b = 5.0;
-  double d = 1.0;
-  double theta = M_PI / 2;
+  // double alpha = M_PI / 2;
+  // double b = 5.0;
+  // double d = 1.0;
+  // double theta = M_PI / 2;
+  double alpha = std::get<0>(GetParam());
+  double b = std::get<1>(GetParam());
+  double d = std::get<2>(GetParam());
+  double theta = std::get<3>(GetParam());
 
   tf.addTransform(transform_enums::INITIAL,
                   tf.getRotation(transform_enums::X, alpha));
@@ -122,13 +128,19 @@ TEST(robotics_tests, HomogeneousTransformationTest) {
   expected_m << std::cos(theta), -std::sin(theta), 0, b,
       std::cos(alpha) * std::sin(theta), std::cos(alpha) * std::cos(theta),
       -std::sin(alpha), -d * std::sin(alpha), std::sin(alpha) * std::sin(theta),
-      std::sin(alpha) * std::cos(theta), std::cos(alpha), -d * std::cos(alpha),
+      std::sin(alpha) * std::cos(theta), std::cos(alpha), d * std::cos(alpha),
       0, 0, 0, 1;
 
-  testCompareMatrices(expected_m, m, 0.0002);
+  testCompareMatrices(expected_m, m, 0.000002);
 
   // Clear
   tf.clearTransformQuery();
   expected_m = Eigen::Matrix4d::Identity(4, 4);
   m = Eigen::Matrix4d::Identity(4, 4);
 }
+
+INSTANTIATE_TEST_SUITE_P(
+    HomogeneousTransformationTests, HomogeneousTransFixture,
+    testing::Values(std::array<double, 4>{M_PI / 2, 5.0, 1.0, M_PI / 2},
+                    std::array<double, 4>{M_PI / 3, -1.24, 0.452,
+                                          M_PI * 1.254}));
