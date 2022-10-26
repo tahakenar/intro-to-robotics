@@ -8,11 +8,11 @@ include_directories(eigen)
 
 enable_testing()
 
-
 add_subdirectory(googletest)
 
 set(HEADERS include/transforms.h include/forward_kinematics.h)
-set(SOURCES src/transforms.cpp src/forward_kinematics.cpp)
+set(SOURCES src/transforms.cpp src/forward_kinematics.cpp
+            src/inverse_kinematics.cpp)
 
 add_library(robotics_lib STATIC ${SOURCES} ${HEADERS})
 
