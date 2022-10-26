@@ -1,9 +1,10 @@
 #include "forward_kinematics.h"
 
 FKModel::FKModel(const int& number_of_joints) : dof_(number_of_joints) {
-  dh_params_.reserve(dof_);
-  variable_joint_states_.reserve(dof_);
-  transformation_matrices_.reserve(dof_);
+  dh_params_.resize(dof_);
+  variable_joint_states_.resize(dof_);
+  transformation_matrices_.resize(dof_);
+
   fk_model_ = Eigen::Matrix4d::Identity(4, 4);
 }
 
@@ -13,9 +14,10 @@ void FKModel::assignDHParameters(const int& joint_idx,
 }
 
 void FKModel::assignTransformationMatrices() {
+  Eigen::Matrix4d tf_m;
   for (int i = 0; i < dof_; i++) {
-    transformation_matrices_.at(i) =
-        this->getHomogeneousTransMatrix(dh_params_.at(i));
+    tf_m = this->getHomogeneousTransMatrix(dh_params_.at(i));
+    transformation_matrices_.at(i) = tf_m;
   }
 }
 
@@ -35,7 +37,6 @@ Eigen::Matrix4d FKModel::getHomogeneousTransMatrix(
   A(2, 1) = std::sin(dh_param.alpha);
   A(2, 2) = std::cos(dh_param.alpha);
   A(2, 3) = dh_param.d;
-
   return A;
 }
 
@@ -45,8 +46,9 @@ std::vector<Eigen::Matrix4d> FKModel::getTransformationMatrices() {
 
 void FKModel::calculateFKModel() {
   fk_model_ = Eigen::Matrix4d::Identity(4, 4);
-  for (auto joint : transformation_matrices_) {
-    fk_model_ *= joint;
+
+  for (const auto joint : transformation_matrices_) {
+    fk_model_ = fk_model_ * joint;
   }
 }
 

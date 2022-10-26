@@ -36,4 +36,5 @@ jobs:
       - name: Test
         run: |
             cd ${{github.workspace}}/build
-            ./test/robotics_tests
+            ./test/transformation_tests
+            ./test/forward_kine_tests
