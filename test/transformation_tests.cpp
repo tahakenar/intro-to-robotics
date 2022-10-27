@@ -106,10 +106,6 @@ TEST_P(HomogeneousTransFixture, HomogeneousTransformationTest) {
   Eigen::Matrix4d m = Eigen::Matrix4d::Identity(4, 4);
   Eigen::Matrix4d expected_m(4, 4);
 
-  // double alpha = M_PI / 2;
-  // double b = 5.0;
-  // double d = 1.0;
-  // double theta = M_PI / 2;
   double alpha = std::get<0>(GetParam());
   double b = std::get<1>(GetParam());
   double d = std::get<2>(GetParam());
