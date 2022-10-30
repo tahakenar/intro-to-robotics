@@ -1,7 +1,7 @@
 #ifndef TRANSFORMS_H
 #define TRANSFORMS_H
 
-#include <Eigen/Core>
+#include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
 #include <list>

@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "forward_kinematics.h"
+#include "inverse_kinematics.h"
 #include "transforms.h"
 
 #define UR5E_DOF 6  // degree of freedom
@@ -8,12 +9,12 @@
 int main() {
   Eigen::Matrix4d m;
 
-  AxisDHParam joint0 = {0, M_PI / 2, 0.1625, 5.270894341};
-  AxisDHParam joint1 = {0, 0, 0, 3.316125579};
-  AxisDHParam joint2 = {-0.3922, 0, 0, 1.029744259};
-  AxisDHParam joint3 = {0, M_PI / 2, 0.1333, 3.473205211};
-  AxisDHParam joint4 = {0, -M_PI / 2, 0.0997, 2.094395102};
-  AxisDHParam joint5 = {0, 0, 0.0996, 1.570796327};
+  AxisDHParam joint0 = {0, M_PI / 2, 0.1625, 0};
+  AxisDHParam joint1 = {-0.4250, 0, 0, 0};
+  AxisDHParam joint2 = {-0.3922, 0, 0, 0};
+  AxisDHParam joint3 = {0, M_PI / 2, 0.1333, 0};
+  AxisDHParam joint4 = {0, -M_PI / 2, 0.0997, 0};
+  AxisDHParam joint5 = {0, 0, 0.0996, 0};
 
   FKModel ur5e_fk_model = FKModel(UR5E_DOF);
   ur5e_fk_model.assignDHParameters(0, joint0);
@@ -26,7 +27,22 @@ int main() {
   ur5e_fk_model.calculateFKModel();
   m = ur5e_fk_model.getFKModel();
 
+  IKModel ur5e_ik_model = IKModel(UR5E_DOF);
+  ur5e_ik_model.assignTransformationMatrices(
+      ur5e_fk_model.getTransformationMatrices());
+
+  m = ur5e_fk_model.getFKModel();
+  std::cout << "FK model" << std::endl;
   std::cout << m << std::endl;
+
+  Eigen::Vector4d initial_pos = m.block<4, 1>(0, 3);
+
+  ur5e_ik_model.assignCurrentPosition(initial_pos);
+
+  Eigen::MatrixXd j = ur5e_ik_model.getJacobianMatrix();
+
+  std::cout << "Jacobian: " << std::endl;
+  std::cout << j << std::endl;
 
   return 0;
 }

@@ -10,7 +10,8 @@ enable_testing()
 
 add_subdirectory(googletest)
 
-set(HEADERS include/transforms.h include/forward_kinematics.h)
+set(HEADERS include/transforms.h include/forward_kinematics.h
+            include/inverse_kinematics.h)
 set(SOURCES src/transforms.cpp src/forward_kinematics.cpp
             src/inverse_kinematics.cpp)
 

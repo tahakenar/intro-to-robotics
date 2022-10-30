@@ -1,7 +1,7 @@
 #ifndef FORWARD_KINEMATICS_H
 #define FORWARD_KINEMATICS_H
 
-#include <Eigen/Core>
+#include <Eigen/Dense>
 #include <cmath>
 #include <iostream>
 #include <vector>
