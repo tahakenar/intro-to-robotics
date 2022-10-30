@@ -1,15 +1,5 @@
 #include "inverse_kinematics.h"
 
-/*
-Step1: Find DX
-Step2: Get dX
-Step3: Get Jacobian
-Step4: Get PseudoInverse
-Step5: Calculate deltaQ
-Step6: Add deltaQ to Q
-Step7: repeat until DX ~= 0
-*/
-
 void IKModel::initializeIKModel(const int& number_of_joints) {
   dof_ = number_of_joints;
   transformation_matrices_.resize(dof_);
@@ -38,6 +28,25 @@ void IKModel::assignGoalPosition(const Eigen::Vector4d& goal_vec) {
 }
 
 Eigen::Vector4d IKModel::getGoalPosition() { return goal_tool_position_; }
+
+void IKModel::calculateJointSpaceOutput() {
+  Eigen::VectorXd delta_q = this->getDeltaJointSpace();
+
+  for (int i = 0; i < dof_; i++) {
+    joint_space_output_.at(i) = joint_space_variables_.at(i) + delta_q[i];
+  }
+}
+
+Eigen::VectorXd IKModel::getDeltaJointSpace() {
+  Eigen::VectorXd delta_q = pinv_jacobian_ * delta_x_;
+  return delta_q;
+}
+
+void IKModel::calculatePseudoInvJacob() {
+  pinv_jacobian_ = this->getJacobianMatrix()
+                       .completeOrthogonalDecomposition()
+                       .pseudoInverse();
+}
 
 Eigen::MatrixXd IKModel::getJacobianMatrix() {
   Eigen::MatrixXd jacob(6, dof_);
