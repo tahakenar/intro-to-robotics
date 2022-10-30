@@ -22,13 +22,14 @@ class FKModel {
   Eigen::Matrix4d fk_model_;
 
  public:
-  FKModel(const int& number_of_joints);
+  void initializeFKModel(const int& number_of_joints);
   void assignDHParameters(const int& joint_idx, const AxisDHParam& params);
   void assignTransformationMatrices();
   Eigen::Matrix4d getHomogeneousTransMatrix(const AxisDHParam& dh_params);
   std::vector<Eigen::Matrix4d> getTransformationMatrices();
   void calculateFKModel();
   Eigen::Matrix4d getFKModel();
+  std::vector<AxisDHParam> getDHParams();
 };
 
 #endif  // FORWARD_KINEMATICS_H

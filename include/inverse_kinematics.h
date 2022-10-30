@@ -6,18 +6,14 @@
 #include <iostream>
 #include <vector>
 
-struct VectorSpaceVel {
-  double x_dot;
-  double y_dot;
-  double z_dot;
-  double w_x;
-  double w_y;
-  double w_z;
-};
+#include "forward_kinematics.h"
 
 class IKModel {
  private:
   int dof_;  // degree of freedom
+
+  FKModel fk_model_;
+
   Eigen::Vector4d current_tool_position_;
   Eigen::Vector4d goal_tool_position_;
   Eigen::Vector4d delta_x_;
@@ -31,8 +27,8 @@ class IKModel {
   Eigen::MatrixXd jacobian_;
 
  public:
-  IKModel(const int& number_of_joints);
-  void assignTransformationMatrices(std::vector<Eigen::Matrix4d> tf_matrices);
+  void initializeIKModel(const int& number_of_joints);
+  void assignTransformationMatrices();
   void assignCurrentPosition(const Eigen::Vector4d& curr_vec);
   Eigen::Vector4d getCurrentPosition();
   void assignGoalPosition(const Eigen::Vector4d& goal_vec);
@@ -43,6 +39,8 @@ class IKModel {
 
   void calculateDeltaX();
   void minifyDeltaX(double fraction);
+  void assignDHParams(const std::vector<AxisDHParam>& dh_params);
+  void assignJointSpaceVariables();
 };
 
 #endif  // INVERSE_KINEMATICS_H

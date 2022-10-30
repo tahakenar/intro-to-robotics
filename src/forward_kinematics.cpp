@@ -1,6 +1,7 @@
 #include "forward_kinematics.h"
 
-FKModel::FKModel(const int& number_of_joints) : dof_(number_of_joints) {
+void FKModel::initializeFKModel(const int& number_of_joints) {
+  dof_ = number_of_joints;
   dh_params_.resize(dof_);
   variable_joint_states_.resize(dof_);
   transformation_matrices_.resize(dof_);
@@ -53,3 +54,5 @@ void FKModel::calculateFKModel() {
 }
 
 Eigen::Matrix4d FKModel::getFKModel() { return fk_model_; }
+
+std::vector<AxisDHParam> FKModel::getDHParams() { return dh_params_; }

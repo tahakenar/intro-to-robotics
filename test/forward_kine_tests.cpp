@@ -33,7 +33,8 @@ INSTANTIATE_TEST_SUITE_P(ForwardKinematicTests, FKFixture,
                          testing::Values(dh_list1));
 
 TEST_P(FKFixture, ForwardKinematicTest) {
-  FKModel ur5e_fk_model = FKModel(UR5E_DOF);
+  FKModel ur5e_fk_model;
+  ur5e_fk_model.initializeFKModel(UR5E_DOF);
   ur5e_fk_model.assignDHParameters(0, std::get<0>(GetParam()));
   ur5e_fk_model.assignDHParameters(1, std::get<1>(GetParam()));
   ur5e_fk_model.assignDHParameters(2, std::get<2>(GetParam()));

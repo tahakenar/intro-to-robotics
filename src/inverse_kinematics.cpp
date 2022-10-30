@@ -10,14 +10,18 @@ Step6: Add deltaQ to Q
 Step7: repeat until DX ~= 0
 */
 
-IKModel::IKModel(const int& number_of_joints) : dof_(number_of_joints) {
+void IKModel::initializeIKModel(const int& number_of_joints) {
+  dof_ = number_of_joints;
   transformation_matrices_.resize(dof_);
   joint_space_variables_.resize(dof_);
   joint_space_output_.resize(dof_);
+
+  fk_model_.initializeFKModel(dof_);
 }
 
-void IKModel::assignTransformationMatrices(
-    std::vector<Eigen::Matrix4d> tf_matrices) {
+void IKModel::assignTransformationMatrices() {
+  std::vector<Eigen::Matrix4d> tf_matrices =
+      fk_model_.getTransformationMatrices();
   for (int i = 0; i < tf_matrices.size(); i++) {
     transformation_matrices_.at(i) = tf_matrices.at(i);
   }
@@ -76,3 +80,17 @@ void IKModel::calculateDeltaX() {
 }
 
 void IKModel::minifyDeltaX(double fraction) { delta_x_ *= fraction; }
+
+void IKModel::assignDHParams(const std::vector<AxisDHParam>& dh_params) {
+  for (int i = 0; i < dof_; i++) {
+    fk_model_.assignDHParameters(i, dh_params.at(i));
+  }
+}
+
+void IKModel::assignJointSpaceVariables() {
+  std::vector<AxisDHParam> dh_params = fk_model_.getDHParams();
+
+  for (int i = 0; i < dof_; i++) {
+    joint_space_variables_.at(i) = dh_params.at(i).theta;
+  }
+}
