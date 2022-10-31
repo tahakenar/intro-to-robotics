@@ -27,6 +27,11 @@ void IKModel::assignGoalPosition(const Eigen::Vector4d& goal_vec) {
   goal_tool_position_ = goal_vec;
 }
 
+void IKModel::updateCurrentPosition() {
+  fk_model_.calculateFKModel();
+  current_tool_position_ = fk_model_.getFKModel().block<4, 1>(3, 0);
+}
+
 Eigen::Vector4d IKModel::getGoalPosition() { return goal_tool_position_; }
 
 void IKModel::calculateJointSpaceOutput() {
@@ -88,7 +93,9 @@ void IKModel::calculateDeltaX() {
   delta_x_ = goal_tool_position_ - current_tool_position_;
 }
 
-void IKModel::minifyDeltaX(double fraction) { delta_x_ *= fraction; }
+void IKModel::minifyDeltaX(double fraction) {
+  minified_delta_x_ = delta_x_ * fraction;
+}
 
 void IKModel::assignDHParams(const std::vector<AxisDHParam>& dh_params) {
   for (int i = 0; i < dof_; i++) {
@@ -102,4 +109,27 @@ void IKModel::assignJointSpaceVariables() {
   for (int i = 0; i < dof_; i++) {
     joint_space_variables_.at(i) = dh_params.at(i).theta;
   }
+}
+
+std::vector<double> IKModel::solveInverseKinematics() {
+  this->calculateDeltaX();
+
+  // TODO: get rid of magic number below
+  while (delta_x_.norm() > 0.002) {
+    this->calculateDeltaX();
+    this->minifyDeltaX(0.002);
+    this->getJacobianMatrix();
+    this->calculateJointSpaceOutput();
+
+    // TODO: update the joint states and ultimate homogeneous tf.
+    fk_model_.updateVariableDHParams(joint_space_output_);
+    fk_model_.assignTransformationMatrices();
+    fk_model_.calculateFKModel();
+
+    // TODO: feed ik model using fk model
+    this->assignTransformationMatrices();
+    this->updateCurrentPosition();
+  }
+
+  return joint_space_output_;
 }

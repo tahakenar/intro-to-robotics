@@ -29,6 +29,7 @@ class FKModel {
   std::vector<Eigen::Matrix4d> getTransformationMatrices();
   void calculateFKModel();
   Eigen::Matrix4d getFKModel();
+  void updateVariableDHParams(const std::vector<double> new_joint_vars);
   std::vector<AxisDHParam> getDHParams();
 };
 

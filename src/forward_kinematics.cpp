@@ -55,4 +55,10 @@ void FKModel::calculateFKModel() {
 
 Eigen::Matrix4d FKModel::getFKModel() { return fk_model_; }
 
+void FKModel::updateVariableDHParams(const std::vector<double> new_joint_vars) {
+  for (int i = 0; i < dof_; i++) {
+    dh_params_.at(i).theta = new_joint_vars.at(i);
+  }
+}
+
 std::vector<AxisDHParam> FKModel::getDHParams() { return dh_params_; }

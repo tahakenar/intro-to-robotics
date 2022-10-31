@@ -28,6 +28,7 @@ class IKModel {
   Eigen::Vector4d current_tool_position_;
   Eigen::Vector4d goal_tool_position_;
   Eigen::Vector4d delta_x_;
+  Eigen::Vector4d minified_delta_x_;
 
   std::vector<Eigen::Matrix4d> transformation_matrices_;
   Eigen::Matrix4d homogeneous_trans_matrix_;
@@ -42,6 +43,7 @@ class IKModel {
   void initializeIKModel(const int& number_of_joints);
   void assignTransformationMatrices();
   void assignCurrentPosition(const Eigen::Vector4d& curr_vec);
+  void updateCurrentPosition();
   Eigen::Vector4d getCurrentPosition();
   void assignGoalPosition(const Eigen::Vector4d& goal_vec);
   Eigen::Vector4d getGoalPosition();
@@ -57,6 +59,8 @@ class IKModel {
   void minifyDeltaX(double fraction);
   void assignDHParams(const std::vector<AxisDHParam>& dh_params);
   void assignJointSpaceVariables();
+
+  std::vector<double> solveInverseKinematics();
 };
 
 #endif  // INVERSE_KINEMATICS_H
